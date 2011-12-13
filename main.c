@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <sn0w.h>
+#include "sn0w.h"
 
 bool verboseflag = false;
 
@@ -37,10 +37,9 @@ bool verboseflag = false;
 			"None." ); \
 			exit(-1);
 
-bool file_exists(const char* fileName)
-{
-   struct stat buf;
-   return !stat(fileName, &buf);
+bool file_exists(const char* fileName) {
+	struct stat buf;
+	return !stat(fileName, &buf);
 }
 
 int main(int argc, char **argv) {
@@ -52,9 +51,8 @@ int main(int argc, char **argv) {
 
 	opterr = 0;
 
-	while ((c = getopt (argc, argv, "vhk:i:b:")) != -1)
-		switch (c)
-	{
+	while ((c = getopt (argc, argv, "vhk:i:b:")) != -1) {
+		switch (c) {
 		case 'v':
 			verboseflag = true;
 			break;
@@ -84,10 +82,14 @@ int main(int argc, char **argv) {
 			break;
 		default:
 			usage();
+		}
 	}
 
 	/* to be done */
-
+	irecv_init();
+	irecv_client_t client = NULL;
+	irecv_error_t err = irecv_open(&client);
+	printf("Handle.. %d", err);
 	printf("to be completed\n");
 
 	return 0;

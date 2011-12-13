@@ -20,6 +20,7 @@
 #ifndef _SN0W_H_
 #define _SN0W_H_
 
+#include "libirecovery.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
