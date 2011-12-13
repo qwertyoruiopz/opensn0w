@@ -52,48 +52,48 @@ int main(int argc, char **argv) {
     int c;
     char *ipsw = NULL, *kernelcache = NULL, *bootlogo = NULL;
 
-	printf("opensn0w, an open source jailbreaking program.\n"
+    printf("opensn0w, an open source jailbreaking program.\n"
            "Compiled on: " __DATE__ " " __TIME__ "\n\n");
 
-	opterr = 0;
+    opterr = 0;
 
-	while ((c = getopt (argc, argv, "vhk:i:b:")) != -1)
-		switch (c)
-	{
-		case 'v':
-			verboseflag = true;
-			break;
-		case 'h':
-			usage();
-			break;
-		case 'i':
-			if (!file_exists(optarg)) {
-				printf("Cannot open IPSW file '%s'\n", ipsw);
-				return -1;
-			}
-			ipsw = optarg;
-			break;
-		case 'k':
-			if (!file_exists(optarg)) {
-				printf("Cannot open kernelcache file '%s'\n", optarg);
-				return -1;
-			}
-			kernelcache = optarg;
-			break;
-		case 'b':
-			if (!file_exists(optarg)) {
-				printf("Cannot open bootlogo file '%s'\n", optarg);
-				return -1;
-			}
-			bootlogo = optarg;
-			break;
-		default:
-			usage();
-	}
+    while ((c = getopt (argc, argv, "vhk:i:b:")) != -1)
+        switch (c)
+    {
+        case 'v':
+            verboseflag = true;
+            break;
+        case 'h':
+            usage();
+            break;
+        case 'i':
+            if (!file_exists(optarg)) {
+                printf("Cannot open IPSW file '%s'\n", ipsw);
+                return -1;
+            }
+            ipsw = optarg;
+            break;
+        case 'k':
+            if (!file_exists(optarg)) {
+                printf("Cannot open kernelcache file '%s'\n", optarg);
+                return -1;
+            }
+            kernelcache = optarg;
+            break;
+        case 'b':
+            if (!file_exists(optarg)) {
+                printf("Cannot open bootlogo file '%s'\n", optarg);
+                return -1;
+            }
+            bootlogo = optarg;
+            break;
+        default:
+            usage();
+    }
 
     /* to be done */
 
     printf("to be completed\n");
 
-	return 0;
+    return 0;
 }
