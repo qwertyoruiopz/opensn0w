@@ -29,14 +29,14 @@ irecv_client_t client = NULL;
 			"Supported devices are: %s\n" \
 			"\n" \
 			"Options:\n" \
-			"\t-v				Verbose mode. Useful for debugging.\n" \
-			"\t-h				Help.\n" \
-			"\t-k kernelcache	Boot using specified kernel.\n" \
-			"\t-i ipsw		   Use specified ipsw to retrieve files from\n" \
-			"\t-b bootlogo.img3  Use specified bootlogo img3 file during startup.\n" \
+			"\t-v                           Verbose mode. Useful for debugging.\n" \
+			"\t-h                           Help.\n" \
+			"\t-k kernelcache               Boot using specified kernel.\n" \
+			"\t-i ipsw                      Use specified ipsw to retrieve files from\n" \
+			"\t-b bootlogo.img3             Use specified bootlogo img3 file during startup.\n" \
 			"\n", \
 			argv[0], \
-			"None." ); \
+			"A4 devices"); \
 			exit(-1);
 
 bool file_exists(const char* fileName) {
@@ -131,6 +131,22 @@ int main(int argc, char **argv) {
 
 	printf("Device found: name: %s, processor s5l%dxsi\n", device->product, device->chip_id);
 	printf("iBoot information: %s\n", client->serial);
+
+	/* What jailbreak exploit is this thing capable of? */
+	if(device->chip_id == 8930 || device->chip_id == 8922 || device->chip_id == 8920) {
+		printf("This device is compatible with the limera1n exploit. Sending.\n");
+		err = limera1n();
+		if(err) {
+			printf("Error during limera1ning.\n");
+			exit(-1);
+		}
+	} else {
+		printf("Support for the S5L%dX isn't done yet.\n", device->chip_id);
+	}
+
+	/* We are owned now! */
+
+	printf("Bootrom is pwned now! :D\n");
 
 	printf("to be completed\n");
 

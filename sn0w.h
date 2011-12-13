@@ -32,4 +32,6 @@
 extern irecv_device_t device;
 extern irecv_client_t client;
 
+int limera1n();
+
 #endif
