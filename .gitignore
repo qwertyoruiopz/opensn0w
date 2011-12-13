@@ -1,2 +1,5 @@
 opensn0w
 *.o
+*.a
+libirecovery/*.a
+.DS_Store
