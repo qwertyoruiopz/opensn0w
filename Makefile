@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -I.
 
 all: opensn0w
 

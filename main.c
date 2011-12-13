@@ -17,12 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <getopt.h>
-#include <sys/stat.h>
-#include <stdbool.h>
+#include <sn0w.h>
 
 bool verboseflag = false;
 
