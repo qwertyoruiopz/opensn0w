@@ -20,6 +20,8 @@
 #include "sn0w.h"
 
 bool verboseflag = false;
+irecv_device_t device = NULL;
+irecv_client_t client = NULL;
 
 #define usage(x) \
 	printf("Usage: %s [OPTION]\n" \
@@ -42,9 +44,28 @@ bool file_exists(const char* fileName) {
 	return !stat(fileName, &buf);
 }
 
+int poll_device_for_dfu() {
+	irecv_error_t err;
+	
+	err = irecv_open(&client);
+	if (err != IRECV_E_SUCCESS) {
+		printf("Connect the device in DFU mode.\n");
+		return 1;
+	}
+
+	if (client->mode != kDfuMode) {
+		printf("Connect the device in DFU mode.\n");
+		irecv_close(client);
+		return 1;
+	}
+
+	return 0;
+}
+
 int main(int argc, char **argv) {
 	int c;
 	char *ipsw = NULL, *kernelcache = NULL, *bootlogo = NULL;
+	irecv_error_t err = IRECV_E_SUCCESS;
 
 	printf("opensn0w, an open source jailbreaking program.\n"
 		   "Compiled on: " __DATE__ " " __TIME__ "\n\n");
@@ -86,10 +107,30 @@ int main(int argc, char **argv) {
 	}
 
 	/* to be done */
+	printf("Initializing libirecovery\n");
 	irecv_init();
-	irecv_client_t client = NULL;
-	irecv_error_t err = irecv_open(&client);
-	printf("Handle.. %d", err);
+
+#ifdef DEBUG
+	irecv_set_debug_level(3);
+#endif
+
+	/* Poll for DFU mode */
+	while(poll_device_for_dfu()) {
+		sleep(1);
+	}
+
+	/* Got the handle */
+
+	/* Check the device */
+	err = irecv_get_device(client, &device);
+	if (device == NULL || device->index == DEVICE_UNKNOWN) {
+		printf("Bad device. errno %d\n", err);
+		return -1;
+	}
+
+	printf("Device found: name: %s, processor s5l%dxsi\n", device->product, device->chip_id);
+	printf("iBoot information: %s\n", client->serial);
+
 	printf("to be completed\n");
 
 	return 0;
