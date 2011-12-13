@@ -120,6 +120,7 @@ int main(int argc, char **argv) {
 	}
 
 	/* Got the handle */
+	printf("So we have a handle! :-)\n");
 
 	/* Check the device */
 	err = irecv_get_device(client, &device);
