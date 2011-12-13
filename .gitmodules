@@ -1,0 +1,3 @@
+[submodule "libirecovery"]
+	path = libirecovery
+	url = ./libirecovery
