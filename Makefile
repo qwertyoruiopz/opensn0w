@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-c -Wall -lusb-1.0 ./libirecovery.a -I.
+CFLAGS=-c -Wall -I. -I/opt/local/include
 OS_TARGET=opensn0w
-LIBS=-lusb-1.0 -framework CoreFoundation ./libirecovery.a
+LIBS=-lusb-1.0 -framework CoreFoundation ./libirecovery.a -L/opt/local/include
 all: opensn0w
 
 opensn0w: main.o

@@ -31,6 +31,7 @@ irecv_client_t client = NULL;
 			"Options:\n" \
 			"\t-v				Verbose mode. Useful for debugging.\n" \
 			"\t-h				Help.\n" \
+			"\t-w url		Get necessary files from a remote IPSW.\n" \
 			"\t-k kernelcache	Boot using specified kernel.\n" \
 			"\t-i ipsw		   Use specified ipsw to retrieve files from\n" \
 			"\t-b bootlogo.img3  Use specified bootlogo img3 file during startup.\n" \
@@ -46,25 +47,30 @@ bool file_exists(const char* fileName) {
 
 int poll_device_for_dfu() {
 	irecv_error_t err;
-	
+	static int try;
 	err = irecv_open(&client);
 	if (err != IRECV_E_SUCCESS) {
-		printf("Connect the device in DFU mode.\n");
-		return 1;
+		printf("\rConnect the device in DFU mode. [%d]", try);
+		fflush(stdout);
+		goto err;
 	}
 
 	if (client->mode != kDfuMode) {
-		printf("Connect the device in DFU mode.\n");
+		printf("\rConnect the device in DFU mode. [%d]", try);
+		fflush(stdout);
 		irecv_close(client);
-		return 1;
+		goto err;
 	}
 
 	return 0;
+	err:
+	try++;
+	return 1;
 }
 
 int main(int argc, char **argv) {
 	int c;
-	char *ipsw = NULL, *kernelcache = NULL, *bootlogo = NULL;
+	char *ipsw = NULL, *kernelcache = NULL, *bootlogo = NULL, *url = NULL;;
 	irecv_error_t err = IRECV_E_SUCCESS;
 
 	printf("opensn0w, an open source jailbreaking program.\n"
@@ -72,7 +78,7 @@ int main(int argc, char **argv) {
 
 	opterr = 0;
 
-	while ((c = getopt (argc, argv, "vhk:i:b:")) != -1) {
+	while ((c = getopt (argc, argv, "vhb:w:k:i:")) != -1) {
 		switch (c) {
 		case 'v':
 			verboseflag = true;
@@ -86,6 +92,9 @@ int main(int argc, char **argv) {
 				return -1;
 			}
 			ipsw = optarg;
+			break;
+		case 'w':
+			url = optarg;
 			break;
 		case 'k':
 			if (!file_exists(optarg)) {
@@ -118,6 +127,7 @@ int main(int argc, char **argv) {
 	while(poll_device_for_dfu()) {
 		sleep(1);
 	}
+	puts("");
 
 	/* Got the handle */
 
