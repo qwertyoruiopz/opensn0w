@@ -24,8 +24,14 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 #include <getopt.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+
+extern irecv_device_t device;
+extern irecv_client_t client;
+
+int limera1n();
 
 #endif

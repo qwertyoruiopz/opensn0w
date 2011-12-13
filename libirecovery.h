@@ -228,6 +228,15 @@ irecv_error_t irecv_finish_transfer(irecv_client_t client);
 irecv_error_t irecv_recv_buffer(irecv_client_t client, char* buffer, unsigned long length);
 irecv_error_t irecv_get_device(irecv_client_t client, irecv_device_t* device);
 
+int irecv_control_transfer( irecv_client_t client,
+							uint8_t bmRequestType,
+							uint8_t bRequest,
+							uint16_t wValue,
+							uint16_t wIndex,
+							unsigned char *data,
+							uint16_t wLength,
+							unsigned int timeout);
+
 #ifdef __cplusplus
 }
 #endif

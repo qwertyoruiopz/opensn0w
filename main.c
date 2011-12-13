@@ -141,6 +141,22 @@ int main(int argc, char **argv) {
 	printf("Device found: name: %s, processor s5l%dxsi\n", device->product, device->chip_id);
 	printf("iBoot information: %s\n", client->serial);
 
+	/* What jailbreak exploit is this thing capable of? */
+	if(device->chip_id == 8930 || device->chip_id == 8922 || device->chip_id == 8920) {
+		printf("This device is compatible with the limera1n exploit. Sending.\n");
+		err = limera1n();
+		if(err) {
+			printf("Error during limera1ning.\n");
+			exit(-1);
+		}
+	} else {
+		printf("Support for the S5L%dX isn't done yet.\n", device->chip_id);
+	}
+
+	/* We are owned now! */
+
+	printf("Bootrom is pwned now! :D\n");
+
 	printf("to be completed\n");
 
 	return 0;
